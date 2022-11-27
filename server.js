@@ -24,10 +24,7 @@ app.use(bodyPaser.json());
 app.use(cors());
 app.use(expressFileupload());
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    next();
-});
+app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
 
 // const db1 = {
 //     users: [
