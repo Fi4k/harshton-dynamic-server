@@ -48,21 +48,21 @@ app.use(expressFileupload());
 //     ]
 // }
 
-// app.get('/', (req, res) => {
-//     html = '';
-//     db.select('*').from('gallery')
-//         .then(photos => {
-//             console.log(photos);
-//             photos.forEach(photo => {
-//                 html = html +
-//                     '<div class="col-lg-6">' +
-//                     '<img src="images/' + photo.filename + '" alt="img" width="100%">' +
-//                     '</div>';
-//             });
-//             res.write(html);
-//         });
+app.get('/', (req, res) => {
+    // html = '';
+    // db.select('*').from('gallery')
+    //     .then(photos => {
+    //         console.log(photos);
+    //         photos.forEach(photo => {
+    //             html = html +
+    //                 '<div class="col-lg-6">' +
+    //                 '<img src="images/' + photo.filename + '" alt="img" width="100%">' +
+    //                 '</div>';
+    //         });
+    res.write("It is working!");
+    //     });
 
-// })
+})
 
 // app.post('/AdddGallery', async (req, res) => {
 //     try {
@@ -228,6 +228,6 @@ app.get('/LoadGalleryAdmin', (req, res) => {
 
 const PORT = process.env.PORT
 
-app.listen(PORT, () => {
+app.listen(PORT || 4000, () => {
     console.log(`app is running on port ${PORT}!`);
 })
