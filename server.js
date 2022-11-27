@@ -59,7 +59,7 @@ app.get('/', (req, res) => {
     //                 '<img src="images/' + photo.filename + '" alt="img" width="100%">' +
     //                 '</div>';
     //         });
-    res.write("It is working!");
+    res.send("It is working!");
     //     });
 
 })
