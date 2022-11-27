@@ -8,10 +8,12 @@ const expressFileupload = require('express-fileupload');
 const db = knex({
     client: 'pg',
     connection: {
-        host: '127.0.0.1',
-        user: 'postgres',
-        password: 'fi4k',
-        database: 'harshtonDB'
+        connectionString: process.env.DATABASE_URL,
+        ssl: true,
+        // host: '127.0.0.1',
+        // user: 'postgres',
+        // password: 'fi4k',
+        // database: 'harshtonDB'
     }
 });
 
