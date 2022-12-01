@@ -5,17 +5,36 @@ const cors = require('cors');
 const knex = require('knex');
 const expressFileupload = require('express-fileupload');
 
-const db = knex({
-    client: 'pg',
-    connection: {
-        connectionString: process.env.DATABASE_URL,
-        ssl: true,
-        // host: '127.0.0.1',
-        // user: 'postgres',
-        // password: 'fi4k',
-        // database: 'harshtonDB'
-    }
-});
+// const db = knex({
+//     client: 'pg',
+//     connection: {
+//         connectionString: process.env.DATABASE_URL,
+//         ssl: true,
+//         // host: '127.0.0.1',
+//         // user: 'postgres',
+//         // password: 'fi4k',
+//         // database: 'harshtonDB'
+//     }
+// });
+
+// createTcpPool initializes a TCP connection pool for a Cloud SQL
+// instance of Postgres.
+const db = async config => {
+    const dbConfig = {
+        client: 'pg',
+        connection: {
+            host: process.env.INSTANCE_HOST, // e.g. '127.0.0.1'
+            port: process.env.DB_PORT, // e.g. '5432'
+            user: process.env.DB_USER, // e.g. 'my-user'
+            password: process.env.DB_PASS, // e.g. 'my-user-password'
+            database: process.env.DB_NAME, // e.g. 'my-database'
+        },
+        // // ... Specify additional properties here.
+        // ...config,
+    };
+    // Establish a connection to the database.
+    return Knex(dbConfig);
+};
 
 // console.log(db.select('*').from('gallery').then(data => { console.log(dataf) }));
 
@@ -169,36 +188,36 @@ app.post('/AddGallery', (req, res) => {
 })
 
 app.get('/LoadGalleryWeb', (req, res) => {
-    res.send("Load gal web is working!");
-    // html = '';
-    // db.select('*').from('webgallery')
-    //     .then(photos => {
-    //         photos.forEach(photo => {
-    //             // const [day, month, date, year, other] = photo.dateadded.toString().split(' ');
-    //             // fDate = day + ' ' + month + ' ' + date + ' ' + year;
-    //             html = html +
-    //                 // '<div class="col-lg-6">' +
-    //                 // '<img src="images/gallery/' + photo.filename + '" alt="1" width="100%">' +
-    //                 // '<div class="col-lg-6">' +
-    //                 // '<p class="caption">' + photo.caption + '</p>' +
-    //                 // '</div>' +
-    //                 // '<div class="col-lg-6">' +
-    //                 // '<p class="date">' + fDate + '</p>' +
-    //                 // '</div>' +
-    //                 // '</div>';
-    //                 '<div class="col-lg-6 img-block">' +
-    //                 '<img src="images/gallery/' + photo.filename + '" alt="1" width="100%">' +
-    //                 '<div class="col-lg-12 caption">' +
-    //                 '<p><b>' + photo.caption + '</b></p>' +
-    //                 '</div>' +
-    //                 '<div class="col-lg-12 date">' +
-    //                 '<p>' + photo.dateadded + '</p>' +
-    //                 '</div>' +
-    //                 '</div>';
-    //         });
-    //         res.json(html);
-    //     })
-    //     .catch((err) => { console.log(err) });
+    // res.send("Load gal web is working!");
+    html = '';
+    db.select('*').from('webgallery')
+        .then(photos => {
+            photos.forEach(photo => {
+                // const [day, month, date, year, other] = photo.dateadded.toString().split(' ');
+                // fDate = day + ' ' + month + ' ' + date + ' ' + year;
+                html = html +
+                    // '<div class="col-lg-6">' +
+                    // '<img src="images/gallery/' + photo.filename + '" alt="1" width="100%">' +
+                    // '<div class="col-lg-6">' +
+                    // '<p class="caption">' + photo.caption + '</p>' +
+                    // '</div>' +
+                    // '<div class="col-lg-6">' +
+                    // '<p class="date">' + fDate + '</p>' +
+                    // '</div>' +
+                    // '</div>';
+                    '<div class="col-lg-6 img-block">' +
+                    '<img src="images/gallery/' + photo.filename + '" alt="1" width="100%">' +
+                    '<div class="col-lg-12 caption">' +
+                    '<p><b>' + photo.caption + '</b></p>' +
+                    '</div>' +
+                    '<div class="col-lg-12 date">' +
+                    '<p>' + photo.dateadded + '</p>' +
+                    '</div>' +
+                    '</div>';
+            });
+            res.json(html);
+        })
+        .catch((err) => { console.log(err) });
 
 })
 
