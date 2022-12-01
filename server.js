@@ -169,35 +169,36 @@ app.post('/AddGallery', (req, res) => {
 })
 
 app.get('/LoadGalleryWeb', (req, res) => {
-    html = '';
-    db.select('*').from('webgallery')
-        .then(photos => {
-            photos.forEach(photo => {
-                // const [day, month, date, year, other] = photo.dateadded.toString().split(' ');
-                // fDate = day + ' ' + month + ' ' + date + ' ' + year;
-                html = html +
-                    // '<div class="col-lg-6">' +
-                    // '<img src="images/gallery/' + photo.filename + '" alt="1" width="100%">' +
-                    // '<div class="col-lg-6">' +
-                    // '<p class="caption">' + photo.caption + '</p>' +
-                    // '</div>' +
-                    // '<div class="col-lg-6">' +
-                    // '<p class="date">' + fDate + '</p>' +
-                    // '</div>' +
-                    // '</div>';
-                    '<div class="col-lg-6 img-block">' +
-                    '<img src="images/gallery/' + photo.filename + '" alt="1" width="100%">' +
-                    '<div class="col-lg-12 caption">' +
-                    '<p><b>' + photo.caption + '</b></p>' +
-                    '</div>' +
-                    '<div class="col-lg-12 date">' +
-                    '<p>' + photo.dateadded + '</p>' +
-                    '</div>' +
-                    '</div>';
-            });
-            res.json(html);
-        })
-        .catch((err) => { console.log(err) });
+    res.send("Load gal web is working!");
+    // html = '';
+    // db.select('*').from('webgallery')
+    //     .then(photos => {
+    //         photos.forEach(photo => {
+    //             // const [day, month, date, year, other] = photo.dateadded.toString().split(' ');
+    //             // fDate = day + ' ' + month + ' ' + date + ' ' + year;
+    //             html = html +
+    //                 // '<div class="col-lg-6">' +
+    //                 // '<img src="images/gallery/' + photo.filename + '" alt="1" width="100%">' +
+    //                 // '<div class="col-lg-6">' +
+    //                 // '<p class="caption">' + photo.caption + '</p>' +
+    //                 // '</div>' +
+    //                 // '<div class="col-lg-6">' +
+    //                 // '<p class="date">' + fDate + '</p>' +
+    //                 // '</div>' +
+    //                 // '</div>';
+    //                 '<div class="col-lg-6 img-block">' +
+    //                 '<img src="images/gallery/' + photo.filename + '" alt="1" width="100%">' +
+    //                 '<div class="col-lg-12 caption">' +
+    //                 '<p><b>' + photo.caption + '</b></p>' +
+    //                 '</div>' +
+    //                 '<div class="col-lg-12 date">' +
+    //                 '<p>' + photo.dateadded + '</p>' +
+    //                 '</div>' +
+    //                 '</div>';
+    //         });
+    //         res.json(html);
+    //     })
+    //     .catch((err) => { console.log(err) });
 
 })
 
