@@ -420,6 +420,7 @@ app.get('/', (req, res) => {
 // })
 
 app.get('/LoadGalleryAdmin', (req, res) => {
+    var html = '';
     const getGallery = async db => {
         return await db
             .select('*')
@@ -428,9 +429,31 @@ app.get('/LoadGalleryAdmin', (req, res) => {
         // .limit(5);
     };
 
-    console.log(getGallery);
+    const [day, month, date, year, other] = photo.datecreated.toString().split(' ');
+    fDate = day + ' ' + month + ' ' + date + ' ' + year;
+    html = html +
+        // '<div class="col-lg-6">' +
+        // '<img src="images/gallery/' + photo.filename + '" alt="1" width="100%">' +
+        // '<div class="col-lg-6">' +
+        // '<p class="caption">' + photo.caption + '</p>' +
+        // '</div>' +
+        // '<div class="col-lg-6">' +
+        // '<p class="date">' + fDate + '</p>' +
+        // '</div>' +
+        // '</div>';
+        '<div class="col-lg-6 img-block">' +
+        '<img src="images/gallery/' + getGallery.filename + '" alt="1" width="100%">' +
+        '<div class="col-lg-12 caption">' +
+        '<p><b>' + getGallery.caption + '</b></p>' +
+        '</div>' +
+        '<div class="col-lg-12 date">' +
+        '<p>' + fDate + '</p>' +
+        '</div>' +
+        '</div>';
 
-    html = '';
+    // console.log(getGallery);
+
+    // html = '';
     // db.select('*').from('webgallery')
     //     .then(photos => {
     //         photos.forEach(photo => {
@@ -456,7 +479,7 @@ app.get('/LoadGalleryAdmin', (req, res) => {
     //                 '</div>' +
     //                 '</div>';
     //         });
-    res.json(getGallery);
+    res.json(html);
     // })
     //     .catch((err) => { console.log(err) });
 
