@@ -230,11 +230,15 @@ const db = async config => {
     const dbConfig = {
         client: 'pg',
         connection: {
-            host: process.env.INSTANCE_HOST, // e.g. '127.0.0.1'
-            port: process.env.DB_PORT, // e.g. '5432'
+            // host: process.env.INSTANCE_HOST, // e.g. '127.0.0.1'
+            // port: process.env.DB_PORT, // e.g. '5432'
+            // user: process.env.DB_USER, // e.g. 'my-user'
+            // password: process.env.DB_PASS, // e.g. 'my-user-password'
+            // database: process.env.DB_NAME, // e.g. 'my-database'
             user: process.env.DB_USER, // e.g. 'my-user'
             password: process.env.DB_PASS, // e.g. 'my-user-password'
             database: process.env.DB_NAME, // e.g. 'my-database'
+            host: process.env.INSTANCE_UNIX_SOCKET, // e.g. '/cloudsql/project:region:instance'
         },
         // // ... Specify additional properties here.
         // ...config,
@@ -429,8 +433,8 @@ app.get('/LoadGalleryAdmin', (req, res) => {
         // .limit(5);
     };
 
-    const [day, month, date, year, other] = photo.datecreated.toString().split(' ');
-    fDate = day + ' ' + month + ' ' + date + ' ' + year;
+    // const [day, month, date, year, other] = getGallery.datecreated.toString().split(' ');
+    // fDate = day + ' ' + month + ' ' + date + ' ' + year;
     html = html +
         // '<div class="col-lg-6">' +
         // '<img src="images/gallery/' + photo.filename + '" alt="1" width="100%">' +
@@ -442,16 +446,16 @@ app.get('/LoadGalleryAdmin', (req, res) => {
         // '</div>' +
         // '</div>';
         '<div class="col-lg-6 img-block">' +
-        '<img src="images/gallery/' + getGallery.filename + '" alt="1" width="100%">' +
+        // '<img src="images/gallery/' + getGallery.filename + '" alt="1" width="100%">' +
         '<div class="col-lg-12 caption">' +
-        '<p><b>' + getGallery.caption + '</b></p>' +
+        // '<p><b>' + getGallery.caption + '</b></p>' +
         '</div>' +
         '<div class="col-lg-12 date">' +
-        '<p>' + fDate + '</p>' +
+        // '<p>' + fDate + '</p>' +
         '</div>' +
         '</div>';
 
-    // console.log(getGallery);
+    console.log(getGallery);
 
     // html = '';
     // db.select('*').from('webgallery')
@@ -479,7 +483,7 @@ app.get('/LoadGalleryAdmin', (req, res) => {
     //                 '</div>' +
     //                 '</div>';
     //         });
-    res.json(html);
+    res.json(getGallery);
     // })
     //     .catch((err) => { console.log(err) });
 
