@@ -82,16 +82,16 @@ const createPool = async () => {
 
     // Check if a Secret Manager secret version is defined
     // If a version is defined, retrieve the secret from Secret Manager and set as the DB_PASS
-    // const { CLOUD_SQL_CREDENTIALS_SECRET } = process.env;
-    // if (CLOUD_SQL_CREDENTIALS_SECRET) {
-    //     const secrets = await accessSecretVersion(CLOUD_SQL_CREDENTIALS_SECRET);
-    //     try {
-    //         process.env.DB_PASS = secrets.toString();
-    //     } catch (err) {
-    //         err.message = `Unable to parse secret from Secret Manager. Make sure that the secret is JSON formatted: \n ${err.message} `;
-    //         throw err;
-    //     }
-    // }
+    const { CLOUD_SQL_CREDENTIALS_SECRET } = process.env;
+    if (CLOUD_SQL_CREDENTIALS_SECRET) {
+        const secrets = await accessSecretVersion(CLOUD_SQL_CREDENTIALS_SECRET);
+        try {
+            process.env.DB_PASS = secrets.toString();
+        } catch (err) {
+            err.message = `Unable to parse secret from Secret Manager. Make sure that the secret is JSON formatted: \n ${err.message} `;
+            throw err;
+        }
+    }
 
     if (process.env.INSTANCE_HOST) {
         // Use a TCP socket when INSTANCE_HOST (e.g., 127.0.0.1) is defined
@@ -105,14 +105,14 @@ const createPool = async () => {
 };
 
 const ensureSchema = async pool => {
-    const hasTable = await pool.schema.hasTable('webgallery');
-    // if (!hasTable) {
-    //     return pool.schema.createTable('votes', table => {
-    //         table.increments('vote_id').primary();
-    //         table.timestamp('time_cast', 30).notNullable();
-    //         table.specificType('candidate', 'CHAR(6)').notNullable();
-    //     });
-    // }
+    const hasTable = await pool.schema.hasTable('votes');
+    if (!hasTable) {
+        return pool.schema.createTable('votes', table => {
+            table.increments('vote_id').primary();
+            table.timestamp('time_cast', 30).notNullable();
+            table.specificType('candidate', 'CHAR(6)').notNullable();
+        });
+    }
     // logger.info("Ensured that table 'votes' exists");
 };
 
@@ -319,146 +319,136 @@ app.get('/', (req, res) => {
 //     }
 // })
 
-// app.post('/AddGallery', (req, res) => {
+app.post('/AddGallery', (req, res) => {
 
-//     let day;
+    let day;
 
-//     if (new Date().getDay() == 1)
-//         day = 'Mon'
-//     else if (new Date().getDay() == 2)
-//         day = 'Tue'
-//     else if (new Date().getDay() == 3)
-//         day = 'Wed'
-//     else if (new Date().getDay() == 4)
-//         day = 'Thu'
-//     else if (new Date().getDay() == 5)
-//         day = 'Fri'
-//     else if (new Date().getDay() == 6)
-//         day = 'Sat'
-//     else
-//         day = 'Sun'
+    if (new Date().getDay() == 1)
+        day = 'Mon'
+    else if (new Date().getDay() == 2)
+        day = 'Tue'
+    else if (new Date().getDay() == 3)
+        day = 'Wed'
+    else if (new Date().getDay() == 4)
+        day = 'Thu'
+    else if (new Date().getDay() == 5)
+        day = 'Fri'
+    else if (new Date().getDay() == 6)
+        day = 'Sat'
+    else
+        day = 'Sun'
 
-//     let fDate2 = new Date().getFullYear().toString() + '-' + (new Date().getMonth() + 1).toString() + '-' + new Date().getDate().toString()
+    let fDate2 = new Date().getFullYear().toString() + '-' + (new Date().getMonth() + 1).toString() + '-' + new Date().getDate().toString()
 
-//     console.log(fDate2);
+    console.log(fDate2);
 
-//     console.log(req.body)
-//     console.log(req.body.caption);
-//     console.log(req.files.file.name);
+    console.log(req.body)
+    console.log(req.body.caption);
+    console.log(req.files.file.name);
 
-//     // Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
-//     let file = req.files.file;
+    // Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
+    let file = req.files.file;
 
-//     let fname = file.name;
-//     let cap = req.body.caption;
-//     let fDate = Date.now()
+    let fname = file.name;
+    let cap = req.body.caption;
+    let fDate = Date.now()
 
-//     console.log(fDate);
+    console.log(fDate);
 
-//     console.log(fname, cap);
+    console.log(fname, cap);
 
-//     // Use the mv() method to place the file in the upload directory (i.e. "uploads")
-//     file.mv('../uploads/gallery/' + file.name);
+    // Use the mv() method to place the file in the upload directory (i.e. "uploads")
+    file.mv('../uploads/gallery/' + file.name);
 
 
 
-//     db('webgallery').insert({ filename: fname, caption: cap, dateadded: fDate2 }).catch((err) => { console.log(err) });
+    db('webgallery').insert({ filename: fname, caption: cap, dateadded: fDate2 }).catch((err) => { console.log(err) });
 
-//     db.select('*').from('webgallery')
-//         .then(photos => {
-//             photos.forEach(photo => {
-//                 console.log(photo);
-//             });
-//             // res.json(html);
-//         })
-//         .catch((err) => { console.log(err) });
-//     //send response
-//     // res.send({
-//     //     status: true,
-//     //     message: 'File is uploaded',
-//     //     data: {
-//     //         name: file.name,
-//     //         mimetype: file.mimetype,
-//     //         size: file.size
-//     //     }
-//     // })
+    db.select('*').from('webgallery')
+        .then(photos => {
+            photos.forEach(photo => {
+                console.log(photo);
+            });
+            // res.json(html);
+        })
+        .catch((err) => { console.log(err) });
+    //send response
+    // res.send({
+    //     status: true,
+    //     message: 'File is uploaded',
+    //     data: {
+    //         name: file.name,
+    //         mimetype: file.mimetype,
+    //         size: file.size
+    //     }
+    // })
 
-// })
+})
 
-// app.get('/LoadGalleryWeb', (req, res) => {
-//     // res.send("Load gal web is working!");
-//     html = '';
-//     db.select('*').from('webgallery')
-//         .then(photos => {
-//             photos.forEach(photo => {
-//                 // const [day, month, date, year, other] = photo.dateadded.toString().split(' ');
-//                 // fDate = day + ' ' + month + ' ' + date + ' ' + year;
-//                 html = html +
-//                     // '<div class="col-lg-6">' +
-//                     // '<img src="images/gallery/' + photo.filename + '" alt="1" width="100%">' +
-//                     // '<div class="col-lg-6">' +
-//                     // '<p class="caption">' + photo.caption + '</p>' +
-//                     // '</div>' +
-//                     // '<div class="col-lg-6">' +
-//                     // '<p class="date">' + fDate + '</p>' +
-//                     // '</div>' +
-//                     // '</div>';
-//                     '<div class="col-lg-6 img-block">' +
-//                     '<img src="images/gallery/' + photo.filename + '" alt="1" width="100%">' +
-//                     '<div class="col-lg-12 caption">' +
-//                     '<p><b>' + photo.caption + '</b></p>' +
-//                     '</div>' +
-//                     '<div class="col-lg-12 date">' +
-//                     '<p>' + photo.dateadded + '</p>' +
-//                     '</div>' +
-//                     '</div>';
-//             });
-//             res.json(html);
-//         })
-//         .catch((err) => { console.log(err) });
+app.get('/LoadGalleryWeb', (req, res) => {
+    // res.send("Load gal web is working!");
+    html = '';
+    db.select('*').from('webgallery')
+        .then(photos => {
+            photos.forEach(photo => {
+                // const [day, month, date, year, other] = photo.dateadded.toString().split(' ');
+                // fDate = day + ' ' + month + ' ' + date + ' ' + year;
+                html = html +
+                    // '<div class="col-lg-6">' +
+                    // '<img src="images/gallery/' + photo.filename + '" alt="1" width="100%">' +
+                    // '<div class="col-lg-6">' +
+                    // '<p class="caption">' + photo.caption + '</p>' +
+                    // '</div>' +
+                    // '<div class="col-lg-6">' +
+                    // '<p class="date">' + fDate + '</p>' +
+                    // '</div>' +
+                    // '</div>';
+                    '<div class="col-lg-6 img-block">' +
+                    '<img src="images/gallery/' + photo.filename + '" alt="1" width="100%">' +
+                    '<div class="col-lg-12 caption">' +
+                    '<p><b>' + photo.caption + '</b></p>' +
+                    '</div>' +
+                    '<div class="col-lg-12 date">' +
+                    '<p>' + photo.dateadded + '</p>' +
+                    '</div>' +
+                    '</div>';
+            });
+            res.json(html);
+        })
+        .catch((err) => { console.log(err) });
 
-// })
+})
 
 app.get('/LoadGalleryAdmin', (req, res) => {
-    const getGallery = async pool => {
-        return await pool
-            .select('*')
-            .from('webgallery');
-        // .orderBy('time_cast', 'desc')
-        // .limit(5);
-    };
-
-    console.log(getGallery);
-
     html = '';
-    // db.select('*').from('webgallery')
-    //     .then(photos => {
-    //         photos.forEach(photo => {
-    //             const [day, month, date, year, other] = photo.datecreated.toString().split(' ');
-    //             fDate = day + ' ' + month + ' ' + date + ' ' + year;
-    //             html = html +
-    //                 // '<div class="col-lg-6">' +
-    //                 // '<img src="images/gallery/' + photo.filename + '" alt="1" width="100%">' +
-    //                 // '<div class="col-lg-6">' +
-    //                 // '<p class="caption">' + photo.caption + '</p>' +
-    //                 // '</div>' +
-    //                 // '<div class="col-lg-6">' +
-    //                 // '<p class="date">' + fDate + '</p>' +
-    //                 // '</div>' +
-    //                 // '</div>';
-    //                 '<div class="col-lg-6 img-block">' +
-    //                 '<img src="images/gallery/' + photo.filename + '" alt="1" width="100%">' +
-    //                 '<div class="col-lg-12 caption">' +
-    //                 '<p><b>' + photo.caption + '</b></p>' +
-    //                 '</div>' +
-    //                 '<div class="col-lg-12 date">' +
-    //                 '<p>' + fDate + '</p>' +
-    //                 '</div>' +
-    //                 '</div>';
-    //         });
-    res.json('html');
-    // })
-    //     .catch((err) => { console.log(err) });
+    db.select('*').from('webgallery')
+        .then(photos => {
+            photos.forEach(photo => {
+                const [day, month, date, year, other] = photo.datecreated.toString().split(' ');
+                fDate = day + ' ' + month + ' ' + date + ' ' + year;
+                html = html +
+                    // '<div class="col-lg-6">' +
+                    // '<img src="images/gallery/' + photo.filename + '" alt="1" width="100%">' +
+                    // '<div class="col-lg-6">' +
+                    // '<p class="caption">' + photo.caption + '</p>' +
+                    // '</div>' +
+                    // '<div class="col-lg-6">' +
+                    // '<p class="date">' + fDate + '</p>' +
+                    // '</div>' +
+                    // '</div>';
+                    '<div class="col-lg-6 img-block">' +
+                    '<img src="images/gallery/' + photo.filename + '" alt="1" width="100%">' +
+                    '<div class="col-lg-12 caption">' +
+                    '<p><b>' + photo.caption + '</b></p>' +
+                    '</div>' +
+                    '<div class="col-lg-12 date">' +
+                    '<p>' + fDate + '</p>' +
+                    '</div>' +
+                    '</div>';
+            });
+            res.json(html);
+        })
+        .catch((err) => { console.log(err) });
 
 })
 
