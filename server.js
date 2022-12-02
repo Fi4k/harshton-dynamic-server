@@ -456,7 +456,7 @@ app.get('/LoadGalleryAdmin', (req, res) => {
     //                 '</div>' +
     //                 '</div>';
     //         });
-    res.json('html');
+    res.json(getGallery);
     // })
     //     .catch((err) => { console.log(err) });
 
