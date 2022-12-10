@@ -469,7 +469,7 @@ app.get('/LoadGalleryAdmin', (req, res) => {
         //     //     '</div>';
         // });
         // res.write(rows);
-        res.write(JSON.stringify(rows));
+        res.send(JSON.stringify(rows));
     }).catch((err) => { console.log(err) });
 
 })
