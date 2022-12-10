@@ -19,8 +19,8 @@ const expressFileupload = require('express-fileupload');
 // });
 
 const app = express();
-app.use(cors());
 app.use(bodyPaser.json());
+app.use(cors());
 app.use(expressFileupload());
 
 app.use(function (req, res, next) {
@@ -29,19 +29,7 @@ app.use(function (req, res, next) {
     next();
 })
 
-const db = knex({
-    client: 'pg',
-    connection: {
-        connectionString: process.env.DATABASE_URL,
-        ssl: true,
-        // host: '127.0.0.1',
-        // user: 'postgres',
-        // password: 'fi4k',
-        // database: 'harshtonDB'
-    }
-});
-
-// let pool;
+let pool;
 
 // app.use(async (req, res, next) => {
 //     if (pool) {
@@ -238,26 +226,26 @@ const db = knex({
 
 // createTcpPool initializes a TCP connection pool for a Cloud SQL
 // instance of Postgres.
-// const db = async config => {
-//     const dbConfig = {
-//         client: 'pg',
-//         connection: {
-//             // host: process.env.INSTANCE_HOST, // e.g. '127.0.0.1'
-//             // port: process.env.DB_PORT, // e.g. '5432'
-//             // user: process.env.DB_USER, // e.g. 'my-user'
-//             // password: process.env.DB_PASS, // e.g. 'my-user-password'
-//             // database: process.env.DB_NAME, // e.g. 'my-database'
-//             user: process.env.DB_USER, // e.g. 'my-user'
-//             password: process.env.DB_PASS, // e.g. 'my-user-password'
-//             database: process.env.DB_NAME, // e.g. 'my-database'
-//             host: process.env.INSTANCE_UNIX_SOCKET, // e.g. '/cloudsql/project:region:instance'
-//         },
-//         // // ... Specify additional properties here.
-//         // ...config,
-//     };
-// Establish a connection to the database.
-//     return Knex(dbConfig);
-// };
+const db = async config => {
+    const dbConfig = {
+        client: 'pg',
+        connection: {
+            // host: process.env.INSTANCE_HOST, // e.g. '127.0.0.1'
+            // port: process.env.DB_PORT, // e.g. '5432'
+            // user: process.env.DB_USER, // e.g. 'my-user'
+            // password: process.env.DB_PASS, // e.g. 'my-user-password'
+            // database: process.env.DB_NAME, // e.g. 'my-database'
+            user: process.env.DB_USER, // e.g. 'my-user'
+            password: process.env.DB_PASS, // e.g. 'my-user-password'
+            database: process.env.DB_NAME, // e.g. 'my-database'
+            host: process.env.INSTANCE_UNIX_SOCKET, // e.g. '/cloudsql/project:region:instance'
+        },
+        // // ... Specify additional properties here.
+        // ...config,
+    };
+    // Establish a connection to the database.
+    return Knex(dbConfig);
+};
 
 // console.log(db.select('*').from('gallery').then(data => { console.log(dataf) }));
 
@@ -300,7 +288,7 @@ app.get('/', (req, res) => {
     //                 '<img src="images/' + photo.filename + '" alt="img" width="100%">' +
     //                 '</div>';
     //         });
-    res.send("Root is working!");
+    res.send("It is working!");
     //     });
 
 })
@@ -335,138 +323,139 @@ app.get('/', (req, res) => {
 //     }
 // })
 
-app.post('/AddGallery', (req, res) => {
-    res.send("Add gal is working!");
-    // let day;
+// app.post('/AddGallery', (req, res) => {
 
-    // if (new Date().getDay() == 1)
-    //     day = 'Mon'
-    // else if (new Date().getDay() == 2)
-    //     day = 'Tue'
-    // else if (new Date().getDay() == 3)
-    //     day = 'Wed'
-    // else if (new Date().getDay() == 4)
-    //     day = 'Thu'
-    // else if (new Date().getDay() == 5)
-    //     day = 'Fri'
-    // else if (new Date().getDay() == 6)
-    //     day = 'Sat'
-    // else
-    //     day = 'Sun'
+//     let day;
 
-    // let fDate2 = new Date().getFullYear().toString() + '-' + (new Date().getMonth() + 1).toString() + '-' + new Date().getDate().toString()
+//     if (new Date().getDay() == 1)
+//         day = 'Mon'
+//     else if (new Date().getDay() == 2)
+//         day = 'Tue'
+//     else if (new Date().getDay() == 3)
+//         day = 'Wed'
+//     else if (new Date().getDay() == 4)
+//         day = 'Thu'
+//     else if (new Date().getDay() == 5)
+//         day = 'Fri'
+//     else if (new Date().getDay() == 6)
+//         day = 'Sat'
+//     else
+//         day = 'Sun'
 
-    // console.log(fDate2);
+//     let fDate2 = new Date().getFullYear().toString() + '-' + (new Date().getMonth() + 1).toString() + '-' + new Date().getDate().toString()
 
-    // console.log(req.body)
-    // console.log(req.body.caption);
-    // console.log(req.files.file.name);
+//     console.log(fDate2);
 
-    // // Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
-    // let file = req.files.file;
+//     console.log(req.body)
+//     console.log(req.body.caption);
+//     console.log(req.files.file.name);
 
-    // let fname = file.name;
-    // let cap = req.body.caption;
-    // let fDate = Date.now()
+//     // Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
+//     let file = req.files.file;
 
-    // console.log(fDate);
+//     let fname = file.name;
+//     let cap = req.body.caption;
+//     let fDate = Date.now()
 
-    // console.log(fname, cap);
+//     console.log(fDate);
 
-    // // Use the mv() method to place the file in the upload directory (i.e. "uploads")
-    // file.mv('../uploads/gallery/' + file.name);
+//     console.log(fname, cap);
+
+//     // Use the mv() method to place the file in the upload directory (i.e. "uploads")
+//     file.mv('../uploads/gallery/' + file.name);
 
 
 
-    // db('webgallery').insert({ filename: fname, caption: cap, dateadded: fDate2 }).catch((err) => { console.log(err) });
+//     db('webgallery').insert({ filename: fname, caption: cap, dateadded: fDate2 }).catch((err) => { console.log(err) });
 
-    // db.select('*').from('webgallery')
-    //     .then(photos => {
-    //         photos.forEach(photo => {
-    //             console.log(photo);
-    //         });
-    //         // res.json(html);
-    //     })
-    //     .catch((err) => { console.log(err) });
-    //send response
-    // res.send({
-    //     status: true,
-    //     message: 'File is uploaded',
-    //     data: {
-    //         name: file.name,
-    //         mimetype: file.mimetype,
-    //         size: file.size
-    //     }
-    // })
-})
+//     db.select('*').from('webgallery')
+//         .then(photos => {
+//             photos.forEach(photo => {
+//                 console.log(photo);
+//             });
+//             // res.json(html);
+//         })
+//         .catch((err) => { console.log(err) });
+//     //send response
+//     // res.send({
+//     //     status: true,
+//     //     message: 'File is uploaded',
+//     //     data: {
+//     //         name: file.name,
+//     //         mimetype: file.mimetype,
+//     //         size: file.size
+//     //     }
+//     // })
 
-app.get('/LoadGalleryWeb', (req, res) => {
-    res.send("Load gal web is working!");
-    // html = '';
-    // db.select('*').from('webgallery')
-    //     .then(photos => {
-    //         photos.forEach(photo => {
-    //             // const [day, month, date, year, other] = photo.dateadded.toString().split(' ');
-    //             // fDate = day + ' ' + month + ' ' + date + ' ' + year;
-    //             html = html +
-    //                 // '<div class="col-lg-6">' +
-    //                 // '<img src="images/gallery/' + photo.filename + '" alt="1" width="100%">' +
-    //                 // '<div class="col-lg-6">' +
-    //                 // '<p class="caption">' + photo.caption + '</p>' +
-    //                 // '</div>' +
-    //                 // '<div class="col-lg-6">' +
-    //                 // '<p class="date">' + fDate + '</p>' +
-    //                 // '</div>' +
-    //                 // '</div>';
-    //                 '<div class="col-lg-6 img-block">' +
-    //                 '<img src="images/gallery/' + photo.filename + '" alt="1" width="100%">' +
-    //                 '<div class="col-lg-12 caption">' +
-    //                 '<p><b>' + photo.caption + '</b></p>' +
-    //                 '</div>' +
-    //                 '<div class="col-lg-12 date">' +
-    //                 '<p>' + photo.dateadded + '</p>' +
-    //                 '</div>' +
-    //                 '</div>';
-    //         });
-    //         res.json(html);
-    //     })
-    //     .catch((err) => { console.log(err) });
-})
+// })
+
+// app.get('/LoadGalleryWeb', (req, res) => {
+//     // res.send("Load gal web is working!");
+//     html = '';
+//     db.select('*').from('webgallery')
+//         .then(photos => {
+//             photos.forEach(photo => {
+//                 // const [day, month, date, year, other] = photo.dateadded.toString().split(' ');
+//                 // fDate = day + ' ' + month + ' ' + date + ' ' + year;
+//                 html = html +
+//                     // '<div class="col-lg-6">' +
+//                     // '<img src="images/gallery/' + photo.filename + '" alt="1" width="100%">' +
+//                     // '<div class="col-lg-6">' +
+//                     // '<p class="caption">' + photo.caption + '</p>' +
+//                     // '</div>' +
+//                     // '<div class="col-lg-6">' +
+//                     // '<p class="date">' + fDate + '</p>' +
+//                     // '</div>' +
+//                     // '</div>';
+//                     '<div class="col-lg-6 img-block">' +
+//                     '<img src="images/gallery/' + photo.filename + '" alt="1" width="100%">' +
+//                     '<div class="col-lg-12 caption">' +
+//                     '<p><b>' + photo.caption + '</b></p>' +
+//                     '</div>' +
+//                     '<div class="col-lg-12 date">' +
+//                     '<p>' + photo.dateadded + '</p>' +
+//                     '</div>' +
+//                     '</div>';
+//             });
+//             res.json(html);
+//         })
+//         .catch((err) => { console.log(err) });
+
+// })
 
 app.get('/LoadGalleryAdmin', (req, res) => {
-    res.send("Load gal admin is working!");
-    // var html = '';
-    // const getGallery = async db => {
-    //     return await db
-    //         .select('*')
-    //         .from('webgallery');
-    //     // .orderBy('time_cast', 'desc')
-    //     // .limit(5);
-    // };
+    var html = '';
+    const getGallery = async db => {
+        return await db
+            .select('*')
+            .from('webgallery');
+        // .orderBy('time_cast', 'desc')
+        // .limit(5);
+    };
 
     // const [day, month, date, year, other] = getGallery.datecreated.toString().split(' ');
     // fDate = day + ' ' + month + ' ' + date + ' ' + year;
-    // html = html +
-    // '<div class="col-lg-6">' +
-    // '<img src="images/gallery/' + photo.filename + '" alt="1" width="100%">' +
-    // '<div class="col-lg-6">' +
-    // '<p class="caption">' + photo.caption + '</p>' +
-    // '</div>' +
-    // '<div class="col-lg-6">' +
-    // '<p class="date">' + fDate + '</p>' +
-    // '</div>' +
-    // '</div>';
-    // '<div class="col-lg-6 img-block">' +
-    // '<img src="images/gallery/' + getGallery.filename + '" alt="1" width="100%">' +
-    // '<div class="col-lg-12 caption">' +
-    // '<p><b>' + getGallery.caption + '</b></p>' +
-    // '</div>' +
-    // '<div class="col-lg-12 date">' +
-    // '<p>' + fDate + '</p>' +
-    // '</div>' +
-    // '</div>';
+    html = html +
+        // '<div class="col-lg-6">' +
+        // '<img src="images/gallery/' + photo.filename + '" alt="1" width="100%">' +
+        // '<div class="col-lg-6">' +
+        // '<p class="caption">' + photo.caption + '</p>' +
+        // '</div>' +
+        // '<div class="col-lg-6">' +
+        // '<p class="date">' + fDate + '</p>' +
+        // '</div>' +
+        // '</div>';
+        '<div class="col-lg-6 img-block">' +
+        // '<img src="images/gallery/' + getGallery.filename + '" alt="1" width="100%">' +
+        '<div class="col-lg-12 caption">' +
+        // '<p><b>' + getGallery.caption + '</b></p>' +
+        '</div>' +
+        '<div class="col-lg-12 date">' +
+        // '<p>' + fDate + '</p>' +
+        '</div>' +
+        '</div>';
 
-    // console.log(getGallery);
+    console.log(getGallery);
 
     // html = '';
     // db.select('*').from('webgallery')
@@ -494,7 +483,7 @@ app.get('/LoadGalleryAdmin', (req, res) => {
     //                 '</div>' +
     //                 '</div>';
     //         });
-    // res.json(html);
+    res.json(getGallery);
     // })
     //     .catch((err) => { console.log(err) });
 
