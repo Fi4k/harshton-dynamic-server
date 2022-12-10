@@ -336,68 +336,68 @@ app.get('/', (req, res) => {
 // })
 
 app.post('/AddGallery', (req, res) => {
-    res.send("Add gal is working!");
-    // let day;
+    // res.send("Add gal is working!");
+    let day;
 
-    // if (new Date().getDay() == 1)
-    //     day = 'Mon'
-    // else if (new Date().getDay() == 2)
-    //     day = 'Tue'
-    // else if (new Date().getDay() == 3)
-    //     day = 'Wed'
-    // else if (new Date().getDay() == 4)
-    //     day = 'Thu'
-    // else if (new Date().getDay() == 5)
-    //     day = 'Fri'
-    // else if (new Date().getDay() == 6)
-    //     day = 'Sat'
-    // else
-    //     day = 'Sun'
+    if (new Date().getDay() == 1)
+        day = 'Mon'
+    else if (new Date().getDay() == 2)
+        day = 'Tue'
+    else if (new Date().getDay() == 3)
+        day = 'Wed'
+    else if (new Date().getDay() == 4)
+        day = 'Thu'
+    else if (new Date().getDay() == 5)
+        day = 'Fri'
+    else if (new Date().getDay() == 6)
+        day = 'Sat'
+    else
+        day = 'Sun'
 
-    // let fDate2 = new Date().getFullYear().toString() + '-' + (new Date().getMonth() + 1).toString() + '-' + new Date().getDate().toString()
+    let fDate2 = new Date().getFullYear().toString() + '-' + (new Date().getMonth() + 1).toString() + '-' + new Date().getDate().toString()
 
-    // console.log(fDate2);
+    console.log(fDate2);
 
-    // console.log(req.body)
-    // console.log(req.body.caption);
-    // console.log(req.files.file.name);
+    console.log(req.body)
+    console.log(req.body.caption);
+    console.log(req.files.file.name);
 
-    // // Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
-    // let file = req.files.file;
+    // Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
+    let file = req.files.file;
 
-    // let fname = file.name;
-    // let cap = req.body.caption;
-    // let fDate = Date.now()
+    let fname = file.name;
+    let cap = req.body.caption;
+    let fDate = Date.now()
 
-    // console.log(fDate);
+    console.log(fDate);
 
-    // console.log(fname, cap);
+    console.log(fname, cap);
 
-    // // Use the mv() method to place the file in the upload directory (i.e. "uploads")
-    // file.mv('../uploads/gallery/' + file.name);
+    // Use the mv() method to place the file in the upload directory (i.e. "uploads")
+    file.mv('../uploads/gallery/' + file.name);
 
 
 
-    // db('webgallery').insert({ filename: fname, caption: cap, dateadded: fDate2 }).catch((err) => { console.log(err) });
+    db('webgallery').insert({ filename: fname, caption: cap, dateadded: fDate2 }).catch((err) => { console.log(err) });
 
-    // db.select('*').from('webgallery')
-    //     .then(photos => {
-    //         photos.forEach(photo => {
-    //             console.log(photo);
-    //         });
-    //         // res.json(html);
-    //     })
-    //     .catch((err) => { console.log(err) });
+    db.select('*').from('webgallery')
+        .then(photos => {
+            photos.forEach(photo => {
+                console.log(photo);
+            });
+            // res.json(html);
+        })
+        .catch((err) => { console.log(err) });
     //send response
-    // res.send({
-    //     status: true,
-    //     message: 'File is uploaded',
-    //     data: {
-    //         name: file.name,
-    //         mimetype: file.mimetype,
-    //         size: file.size
-    //     }
-    // })
+    res.send({
+        status: true,
+        message: 'File is uploaded',
+        data: {
+            name: file.name,
+            mimetype: file.mimetype,
+            size: file.size
+        }
+    })
 })
 
 app.get('/LoadGalleryWeb', (req, res) => {
