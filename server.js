@@ -434,8 +434,8 @@ app.get('/LoadGalleryWeb', (req, res) => {
 })
 
 app.get('/LoadGalleryAdmin', (req, res) => {
-    res.send("Load gal admin is working!");
-    // var html = '';
+    // res.send("Load gal admin is working!");
+    var html = '';
     // const getGallery = async db => {
     //     return await db
     //         .select('*')
@@ -444,59 +444,32 @@ app.get('/LoadGalleryAdmin', (req, res) => {
     //     // .limit(5);
     // };
 
-    // const [day, month, date, year, other] = getGallery.datecreated.toString().split(' ');
-    // fDate = day + ' ' + month + ' ' + date + ' ' + year;
-    // html = html +
-    // '<div class="col-lg-6">' +
-    // '<img src="images/gallery/' + photo.filename + '" alt="1" width="100%">' +
-    // '<div class="col-lg-6">' +
-    // '<p class="caption">' + photo.caption + '</p>' +
-    // '</div>' +
-    // '<div class="col-lg-6">' +
-    // '<p class="date">' + fDate + '</p>' +
-    // '</div>' +
-    // '</div>';
-    // '<div class="col-lg-6 img-block">' +
-    // '<img src="images/gallery/' + getGallery.filename + '" alt="1" width="100%">' +
-    // '<div class="col-lg-12 caption">' +
-    // '<p><b>' + getGallery.caption + '</b></p>' +
-    // '</div>' +
-    // '<div class="col-lg-12 date">' +
-    // '<p>' + fDate + '</p>' +
-    // '</div>' +
-    // '</div>';
-
-    // console.log(getGallery);
-
-    // html = '';
-    // db.select('*').from('webgallery')
-    //     .then(photos => {
-    //         photos.forEach(photo => {
-    //             const [day, month, date, year, other] = photo.datecreated.toString().split(' ');
-    //             fDate = day + ' ' + month + ' ' + date + ' ' + year;
-    //             html = html +
-    //                 // '<div class="col-lg-6">' +
-    //                 // '<img src="images/gallery/' + photo.filename + '" alt="1" width="100%">' +
-    //                 // '<div class="col-lg-6">' +
-    //                 // '<p class="caption">' + photo.caption + '</p>' +
-    //                 // '</div>' +
-    //                 // '<div class="col-lg-6">' +
-    //                 // '<p class="date">' + fDate + '</p>' +
-    //                 // '</div>' +
-    //                 // '</div>';
-    //                 '<div class="col-lg-6 img-block">' +
-    //                 '<img src="images/gallery/' + photo.filename + '" alt="1" width="100%">' +
-    //                 '<div class="col-lg-12 caption">' +
-    //                 '<p><b>' + photo.caption + '</b></p>' +
-    //                 '</div>' +
-    //                 '<div class="col-lg-12 date">' +
-    //                 '<p>' + fDate + '</p>' +
-    //                 '</div>' +
-    //                 '</div>';
-    //         });
-    // res.json(html);
-    // })
-    //     .catch((err) => { console.log(err) });
+    db.select('*').from('webgallery').then(rows => {
+        rows.forEach(row => {
+            // const [day, month, date, year, other] = row.dateadded.toString().split(' ');
+            // fDate = day + ' ' + month + ' ' + date + ' ' + year;
+            html = html +
+                '<div class="col-lg-6">' +
+                '<img src="images/gallery/' + row.filename + '" alt="1" width="100%">' +
+                '<div class="col-lg-6">' +
+                '<p class="caption">' + row.caption + '</p>' +
+                '</div>' +
+                '<div class="col-lg-6">' +
+                '<p class="date">' + row.dateadded + '</p>' +
+                '</div>' +
+                '</div>';
+            // '<div class="col-lg-6 img-block">' +
+            //     '<img src="images/gallery/' + getGallery.filename + '" alt="1" width="100%">' +
+            //     '<div class="col-lg-12 caption">' +
+            //     '<p><b>' + getGallery.caption + '</b></p>' +
+            //     '</div>' +
+            //     '<div class="col-lg-12 date">' +
+            //     '<p>' + fDate + '</p>' +
+            //     '</div>' +
+            //     '</div>';
+        });
+        res.write(html);
+    }).catch((err) => { console.log(err) });
 
 })
 
