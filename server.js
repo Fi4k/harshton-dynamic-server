@@ -450,12 +450,12 @@ app.get('/LoadGalleryAdmin', (req, res) => {
             // fDate = day + ' ' + month + ' ' + date + ' ' + year;
             html = html +
                 '<div class="col-lg-6">' +
-                '<img src="images/gallery/' + row.filename + '" alt="1" width="100%">' +
+                '<img src="images/gallery/' + "row.filename" + '" alt="1" width="100%">' +
                 '<div class="col-lg-6">' +
-                '<p class="caption">' + row.caption + '</p>' +
+                '<p class="caption">' + "row.caption" + '</p>' +
                 '</div>' +
                 '<div class="col-lg-6">' +
-                '<p class="date">' + row.dateadded + '</p>' +
+                '<p class="date">' + "row.dateadded" + '</p>' +
                 '</div>' +
                 '</div>';
             // '<div class="col-lg-6 img-block">' +
