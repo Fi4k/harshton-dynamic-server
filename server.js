@@ -445,30 +445,30 @@ app.get('/LoadGalleryAdmin', (req, res) => {
     // };
 
     db.select('*').from('webgallery').then(rows => {
-        rows.forEach(row => {
-            // const [day, month, date, year, other] = row.dateadded.toString().split(' ');
-            // fDate = day + ' ' + month + ' ' + date + ' ' + year;
-            html = html +
-                '<div class="col-lg-6">' +
-                '<img src="images/gallery/' + "row.filename" + '" alt="1" width="100%">' +
-                '<div class="col-lg-6">' +
-                '<p class="caption">' + "row.caption" + '</p>' +
-                '</div>' +
-                '<div class="col-lg-6">' +
-                '<p class="date">' + "row.dateadded" + '</p>' +
-                '</div>' +
-                '</div>';
-            // '<div class="col-lg-6 img-block">' +
-            //     '<img src="images/gallery/' + getGallery.filename + '" alt="1" width="100%">' +
-            //     '<div class="col-lg-12 caption">' +
-            //     '<p><b>' + getGallery.caption + '</b></p>' +
-            //     '</div>' +
-            //     '<div class="col-lg-12 date">' +
-            //     '<p>' + fDate + '</p>' +
-            //     '</div>' +
-            //     '</div>';
-        });
-        res.write(html);
+        // rows.forEach(row => {
+        //     // const [day, month, date, year, other] = row.dateadded.toString().split(' ');
+        //     // fDate = day + ' ' + month + ' ' + date + ' ' + year;
+        //     html = html +
+        //         '<div class="col-lg-6">' +
+        //         '<img src="images/gallery/' + "row.filename" + '" alt="1" width="100%">' +
+        //         '<div class="col-lg-6">' +
+        //         '<p class="caption">' + "row.caption" + '</p>' +
+        //         '</div>' +
+        //         '<div class="col-lg-6">' +
+        //         '<p class="date">' + "row.dateadded" + '</p>' +
+        //         '</div>' +
+        //         '</div>';
+        //     // '<div class="col-lg-6 img-block">' +
+        //     //     '<img src="images/gallery/' + getGallery.filename + '" alt="1" width="100%">' +
+        //     //     '<div class="col-lg-12 caption">' +
+        //     //     '<p><b>' + getGallery.caption + '</b></p>' +
+        //     //     '</div>' +
+        //     //     '<div class="col-lg-12 date">' +
+        //     //     '<p>' + fDate + '</p>' +
+        //     //     '</div>' +
+        //     //     '</div>';
+        // });
+        res.write(rows);
     }).catch((err) => { console.log(err) });
 
 })
