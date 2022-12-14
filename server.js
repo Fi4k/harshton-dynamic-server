@@ -307,19 +307,19 @@ app.get('/', (req, res) => {
 
 app.post('/Login', (req, res) => {
     // console.log(req.body)
-    console.log(req.email);
-    console.log(req.body);
+    // console.log(req.email);
+    // console.log(req.body);
 
     // console.log(req.files.file.name);
 
     let found = false;
 
-    // db.select('*').from('users').where({email:req.body.email})
-    // db('users').where('uemail', req.body.email).select()
-    //     .then(user => {
-    //         res.json(user[0].uname);
-    //     })
-    //     .catch((err) => { console.log(err) });
+    db.select('*').from('users').where({ email: req.body.email })
+    db('users').where('uemail', req.body.email).select()
+        .then(user => {
+            res.json(user[0].uname);
+        })
+        .catch((err) => { console.log(err) });
 
     if (!found) {
         res.json('No such user!');
