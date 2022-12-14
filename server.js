@@ -306,9 +306,9 @@ app.get('/', (req, res) => {
 })
 
 app.post('/Login', (req, res) => {
-    console.log(req.body)
-    console.log(req.body.caption);
-    console.log(req.files.file.name);
+    // console.log(req.body)
+    // console.log(req.body.caption);
+    // console.log(req.files.file.name);
 
     let found = false;
 
