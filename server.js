@@ -500,7 +500,7 @@ app.get('/LoadGalleryAdmin', (req, res) => {
 
 })
 
-app.get('/DeleteGallery', (req, res) => {
+app.post('/DeleteGallery', (req, res) => {
     db('webgallery').where('id', req.body.id).del()
         .then(() => {
             res.send(JSON.stringify('deleted'));
