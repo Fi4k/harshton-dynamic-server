@@ -318,7 +318,7 @@ app.post('/Login', (req, res) => {
     db('users').where('uemail', req.body.email).select()
         .then(user => {
             // res.json(user[0].uname);
-            console.log(user);
+            console.log(user[0].uname);
         })
         .catch((err) => { console.log(err) });
 
