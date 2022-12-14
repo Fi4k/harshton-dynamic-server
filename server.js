@@ -305,7 +305,7 @@ app.get('/', (req, res) => {
 
 })
 
-app.post('/Login', (req, res) => {
+app.post('/Login', async (req, res) => {
     // console.log(req.body)
     // console.log(req.email);
     // console.log(req.body);
@@ -314,7 +314,7 @@ app.post('/Login', (req, res) => {
 
     // let found = false;
 
-    db.select('*').from('users').where({ email: req.body.email })
+    await db.select('*').from('users').where({ email: req.body.email })
     db('users').where('uemail', req.body.email).select()
         .then(user => {
             if (user.length) {
@@ -361,7 +361,7 @@ app.post('/Login', (req, res) => {
 //     }
 // })
 
-app.post('/AddGallery', (req, res) => {
+app.post('/AddGallery', async (req, res) => {
     // res.send("Add gal is working!");
     let day;
 
@@ -404,7 +404,7 @@ app.post('/AddGallery', (req, res) => {
 
 
 
-    db('webgallery').insert({ filename: fname, caption: cap, dateadded: fDate2 })
+    await db('webgallery').insert({ filename: fname, caption: cap, dateadded: fDate2 })
         .then(() => {
             res.send(JSON.stringify('added'));
         }).catch((err) => { console.log(err) });
@@ -503,8 +503,8 @@ app.get('/LoadGalleryAdmin', (req, res) => {
 
 })
 
-app.post('/DeleteGallery', (req, res) => {
-    db('webgallery').where('id', req.body.id).del()
+app.post('/DeleteGallery', async (req, res) => {
+    await db('webgallery').where('id', req.body.id).del()
         .then(() => {
             res.send(JSON.stringify('deleted'));
         }).catch((err) => { console.log(err) });
