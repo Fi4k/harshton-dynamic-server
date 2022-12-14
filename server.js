@@ -318,7 +318,7 @@ app.post('/Login', (req, res) => {
     db('users').where('uemail', req.body.email).select()
         .then(user => {
             if (user.length) {
-                res.json(user[0].uname);
+                res.json('user[0].uname');
             } else {
                 res.json('No such user!');
             }
