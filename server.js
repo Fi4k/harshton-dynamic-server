@@ -404,26 +404,28 @@ app.post('/AddGallery', (req, res) => {
 
 
 
-    db('webgallery').insert({ filename: fname, caption: cap, dateadded: fDate2 }).catch((err) => { console.log(err) });
-
-    db.select('*').from('webgallery')
-        .then(photos => {
-            photos.forEach(photo => {
-                console.log(photo);
-            });
-            // res.json(html);
-        })
+    db('webgallery').insert({ filename: fname, caption: cap, dateadded: fDate2 })
+    res.send(JSON.stringify('added'))
         .catch((err) => { console.log(err) });
-    //send response
-    res.send({
-        status: true,
-        message: 'File is uploaded',
-        data: {
-            name: file.name,
-            mimetype: file.mimetype,
-            size: file.size
-        }
-    })
+
+    // db.select('*').from('webgallery')
+    //     .then(photos => {
+    //         photos.forEach(photo => {
+    //             console.log(photo);
+    //         });
+    //         // res.json(html);
+    //     })
+    //     .catch((err) => { console.log(err) });
+    // //send response
+    // res.send({
+    //     status: true,
+    //     message: 'File is uploaded',
+    //     data: {
+    //         name: file.name,
+    //         mimetype: file.mimetype,
+    //         size: file.size
+    //     }
+    // })
 })
 
 app.get('/LoadGalleryWeb', (req, res) => {
