@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyPaser = require('body-parser');
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const cors = require('cors');
 const knex = require('knex');
 // const createTcpPool = require('./createTcpPool');
@@ -471,6 +471,14 @@ app.get('/LoadGalleryAdmin', (req, res) => {
         // res.write(rows);
         res.send(JSON.stringify(rows));
     }).catch((err) => { console.log(err) });
+
+})
+
+app.get('/DeleteGallery', (req, res) => {
+    db('webgallery').where('id', 6).del()
+        .then(() => {
+            res.send(JSON.stringify('rows'));
+        }).catch((err) => { console.log(err) });
 
 })
 
