@@ -312,19 +312,23 @@ app.post('/Login', (req, res) => {
 
     // console.log(req.files.file.name);
 
-    let found = false;
+    // let found = false;
 
     db.select('*').from('users').where({ email: req.body.email })
     db('users').where('uemail', req.body.email).select()
         .then(user => {
-            res.send(user[0].uname);
+            if (user.length) {
+                res.json(user[0].uname);
+            } else {
+                res.json('No such user!');
+            }
             // console.log(user[0].uname);
         })
         .catch((err) => { console.log(err) });
 
-    if (!found) {
-        res.json('No such user!');
-    }
+    // if (!found) {
+
+    // }
 })
 
 // app.post('/AdddGallery', async (req, res) => {
