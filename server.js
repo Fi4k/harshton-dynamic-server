@@ -501,9 +501,9 @@ app.get('/LoadGalleryAdmin', (req, res) => {
 })
 
 app.get('/DeleteGallery', (req, res) => {
-    db('webgallery').where('id', 6).del()
+    db('webgallery').where('id', req.body.id).del()
         .then(() => {
-            res.send(JSON.stringify('rows'));
+            res.send(JSON.stringify('deleted'));
         }).catch((err) => { console.log(err) });
 
 })
