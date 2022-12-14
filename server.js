@@ -305,6 +305,25 @@ app.get('/', (req, res) => {
 
 })
 
+app.post('/Login', (req, res) => {
+    console.log(req.body)
+    console.log(req.body.caption);
+    console.log(req.files.file.name);
+
+    let found = false;
+
+    // db.select('*').from('users').where({email:req.body.email})
+    db('users').where('uemail', req.body.email).select()
+        .then(user => {
+            res.json(user[0].uname);
+        })
+        .catch((err) => { console.log(err) });
+
+    if (!found) {
+        res.json('No such user!');
+    }
+})
+
 // app.post('/AdddGallery', async (req, res) => {
 //     try {
 //         if (!req.files) {
