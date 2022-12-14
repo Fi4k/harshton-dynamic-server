@@ -308,7 +308,7 @@ app.get('/', (req, res) => {
 app.post('/Login', (req, res) => {
     // console.log(req.body)
     console.log(req.body.email);
-    console.log(req.body.password);
+    console.log(req.body);
 
     // console.log(req.files.file.name);
 
