@@ -405,8 +405,9 @@ app.post('/AddGallery', (req, res) => {
 
 
     db('webgallery').insert({ filename: fname, caption: cap, dateadded: fDate2 })
-    res.send(JSON.stringify('added'))
-        .catch((err) => { console.log(err) });
+        .then(() => {
+            res.send(JSON.stringify('added'));
+        }).catch((err) => { console.log(err) });
 
     // db.select('*').from('webgallery')
     //     .then(photos => {
