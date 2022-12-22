@@ -302,7 +302,7 @@ app.get('/', (req, res) => {
     //                 '<img src="images/' + photo.filename + '" alt="img" width="100%">' +
     //                 '</div>';
     //         });
-    res.send(`../../${__dirname}`);
+    res.send(`Root is working!!`);
     //     });
 
 })
@@ -419,7 +419,7 @@ app.post('/AddGallery', async (req, res) => {
         });
 
         db('webgallery').insert({ filename: fname, caption: cap, dateadded: fDate2 })
-
+        console.log('added');
         res.send(JSON.stringify('added'));
 
     }
