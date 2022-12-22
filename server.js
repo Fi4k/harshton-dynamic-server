@@ -58,7 +58,7 @@ const db = knex({
     }
 });
 
-fbApp.initializeApp(firebaseConfig);
+
 
 
 // let pool;
@@ -427,9 +427,10 @@ app.post('/AddGallery', async (req, res) => {
         //     fs.mkdirSync(dir, { recursive: true });
         // }
 
-        const storage = getStorage(fbApp);
-        const imageRef = ref(storage, `uploads/gallery/${file.name}`);
-        uploadBytes(imageRef, file)
+        fbApp.initializeApp(firebaseConfig);
+        const storage = fbApp.getStorage();
+        const imageRef = fbApp.ref(storage, `uploads/gallery/${file.name}`);
+        fbApp.uploadBytes(imageRef, file)
             .then((snapshot) => {
                 console.log('added')
             })
