@@ -315,7 +315,7 @@ app.post('/Login', async (req, res) => {
 
     // let found = false;
 
-    await db.select('*').from('users').where({ email: req.body.email })
+    // await db.select('*').from('users').where({ email: req.body.email })
     db('users').where('uemail', req.body.email).select()
         .then(user => {
             if (user.length) {
