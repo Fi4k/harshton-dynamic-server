@@ -301,7 +301,7 @@ app.get('/', (req, res) => {
     //                 '<img src="images/' + photo.filename + '" alt="img" width="100%">' +
     //                 '</div>';
     //         });
-    res.send(`${__dirname}`);
+    res.send(`../../${__dirname}`);
     //     });
 
 })
