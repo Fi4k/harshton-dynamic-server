@@ -7,6 +7,19 @@ const knex = require('knex');
 const expressFileupload = require('express-fileupload');
 const fs = require('fs');
 
+import { initializeApp } from "firebase/app";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyA2dkj7rZElDd37_V3BTNPP3sZ-D9TjLOU",
+    authDomain: "harshton-dynamic-server.firebaseapp.com",
+    projectId: "harshton-dynamic-server",
+    storageBucket: "harshton-dynamic-server.appspot.com",
+    messagingSenderId: "984263998714",
+    appId: "1:984263998714:web:b79d586dcbf44060525d43",
+    measurementId: "G-6MQ0212577"
+};
+
 // const db = knex({
 //     client: 'pg',
 //     connection: {
@@ -42,6 +55,9 @@ const db = knex({
         // database: 'harshtonDB'
     }
 });
+
+const fbApp = initializeApp(firebaseConfig);
+
 
 // let pool;
 
@@ -409,21 +425,31 @@ app.post('/AddGallery', async (req, res) => {
         //     fs.mkdirSync(dir, { recursive: true });
         // }
 
-        file.mv(`./${file.name}`
-            // , err => {
-            //     if (err) {
-            //         console.log(err);
-            //     }
+        const storage = getStorage(fbApp);
+        const imageRef = ref(storage, `uploads/gallery/${file.name}`);
+        uploadBytes(imageRef, file)
+        .then((snapshot) => {
+            console.log('added')
+        })
+            .catch((err) => {
+                console.log(err);
+            })
 
-            //     // res.json({ file: `public/${req.body.filename}.jpg` });
-            //     // console.log(res.json);
-            // }
-        );
+        // file.mv(`./${file.name}`
+        // , err => {
+        //     if (err) {
+        //         console.log(err);
+        //     }
+
+        //     // res.json({ file: `public/${req.body.filename}.jpg` });
+        //     // console.log(res.json);
+        // }
+        // );
 
         db('webgallery').insert({ filename: fname, caption: cap, dateadded: fDate2 }).then(() => {
             console.log('added')
             res.send(JSON.stringify('added'));
-        }).catch((err)=> { console.log(err) });
+        }).catch((err) => { console.log(err) });
 
     }
     catch (err) { console.log(err) }
