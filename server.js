@@ -401,9 +401,9 @@ app.post('/AddGallery', async (req, res) => {
     console.log(fname, cap);
 
     // Use the mv() method to place the file in the upload directory (i.e. "uploads")
-    await file.mv('../../uploads/gallery/' + file.name);
+    file.mv('../../uploads/gallery/' + file.name);
 
-    await db('webgallery').insert({ filename: fname, caption: cap, dateadded: fDate2 })
+    db('webgallery').insert({ filename: fname, caption: cap, dateadded: fDate2 })
         .then(() => {
             res.send(JSON.stringify('added'));
         }).catch((err) => { console.log(err) });
