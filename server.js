@@ -405,7 +405,7 @@ app.post('/AddGallery', async (req, res) => {
         // file.mv('./uploads/gallery/' + file.name);
         file.mv(`${__dirname}/uploads/gallery/' + ${file.name}`, err => {
             if (err) {
-                return res.status(500).send(err);
+                console.log(err);
             }
 
             // res.json({ file: `public/${req.body.filename}.jpg` });
