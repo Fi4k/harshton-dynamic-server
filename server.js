@@ -7,8 +7,10 @@ const knex = require('knex');
 const expressFileupload = require('express-fileupload');
 const fs = require('fs');
 
-import { initializeApp } from "firebase/app";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+const initializeApp = require('firebase/app');
+const getStorage = require('firebase/storage');
+const ref = require('firebase/storage');
+const uploadBytes = require('firebase/storage');
 
 const firebaseConfig = {
     apiKey: "AIzaSyA2dkj7rZElDd37_V3BTNPP3sZ-D9TjLOU",
@@ -428,9 +430,9 @@ app.post('/AddGallery', async (req, res) => {
         const storage = getStorage(fbApp);
         const imageRef = ref(storage, `uploads/gallery/${file.name}`);
         uploadBytes(imageRef, file)
-        .then((snapshot) => {
-            console.log('added')
-        })
+            .then((snapshot) => {
+                console.log('added')
+            })
             .catch((err) => {
                 console.log(err);
             })
