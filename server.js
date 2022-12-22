@@ -7,7 +7,7 @@ const knex = require('knex');
 const expressFileupload = require('express-fileupload');
 const fs = require('fs');
 
-const initializeApp = require('firebase/app');
+require('firebase/app');
 const getStorage = require('firebase/storage');
 const ref = require('firebase/storage');
 const uploadBytes = require('firebase/storage');
