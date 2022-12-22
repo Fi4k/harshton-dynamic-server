@@ -423,7 +423,7 @@ app.post('/AddGallery', async (req, res) => {
         db('webgallery').insert({ filename: fname, caption: cap, dateadded: fDate2 }).then(() => {
             console.log('added')
             res.send(JSON.stringify('added'));
-        });
+        }).catch((err) { console.log(err) });
 
     }
     catch (err) { console.log(err) }
