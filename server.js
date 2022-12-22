@@ -5,6 +5,7 @@ const cors = require('cors');
 const knex = require('knex');
 // const createTcpPool = require('./createTcpPool');
 const expressFileupload = require('express-fileupload');
+const fs = require('fs');
 
 // const db = knex({
 //     client: 'pg',
@@ -403,7 +404,12 @@ app.post('/AddGallery', async (req, res) => {
     try {
         // Use the mv() method to place the file in the upload directory (i.e. "uploads")
         // file.mv('./uploads/gallery/' + file.name);
-        file.mv(`${__dirname}/uploads/gallery/' + ${file.name}`, err => {
+        var dir = './uploads/gallery/';
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
+        }
+
+        file.mv(`./uploads/gallery/' + ${file.name}`, err => {
             if (err) {
                 console.log(err);
             }
