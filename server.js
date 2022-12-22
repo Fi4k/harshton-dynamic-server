@@ -409,7 +409,7 @@ app.post('/AddGallery', async (req, res) => {
         //     fs.mkdirSync(dir, { recursive: true });
         // }
 
-        file.mv(`${file.name}`
+        file.mv(`./${file.name}`
             // , err => {
             //     if (err) {
             //         console.log(err);
