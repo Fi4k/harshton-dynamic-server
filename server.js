@@ -404,12 +404,12 @@ app.post('/AddGallery', async (req, res) => {
     try {
         // Use the mv() method to place the file in the upload directory (i.e. "uploads")
         // file.mv('./uploads/gallery/' + file.name);
-        var dir = './uploads/gallery/';
-        if (!fs.existsSync(dir)) {
-            fs.mkdirSync(dir, { recursive: true });
-        }
+        // var dir = './uploads/gallery/';
+        // if (!fs.existsSync(dir)) {
+        //     fs.mkdirSync(dir, { recursive: true });
+        // }
 
-        file.mv(`./uploads/gallery/' + ${file.name}`, err => {
+        file.mv(`${file.name}`, err => {
             if (err) {
                 console.log(err);
             }
