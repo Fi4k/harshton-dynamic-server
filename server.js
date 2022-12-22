@@ -7,7 +7,7 @@ const knex = require('knex');
 const expressFileupload = require('express-fileupload');
 const fs = require('fs');
 
-require('firebase/app');
+const fbApp = require('firebase/app');
 const getStorage = require('firebase/storage');
 const ref = require('firebase/storage');
 const uploadBytes = require('firebase/storage');
@@ -58,7 +58,7 @@ const db = knex({
     }
 });
 
-const fbApp = initializeApp(firebaseConfig);
+fbApp.initializeApp(firebaseConfig);
 
 
 // let pool;
