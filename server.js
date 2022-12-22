@@ -409,14 +409,16 @@ app.post('/AddGallery', async (req, res) => {
         //     fs.mkdirSync(dir, { recursive: true });
         // }
 
-        file.mv(`${file.name}`, err => {
-            if (err) {
-                console.log(err);
-            }
+        file.mv(`${file.name}`
+        // , err => {
+        //     if (err) {
+        //         console.log(err);
+        //     }
 
-            // res.json({ file: `public/${req.body.filename}.jpg` });
-            // console.log(res.json);
-        });
+        //     // res.json({ file: `public/${req.body.filename}.jpg` });
+        //     // console.log(res.json);
+        // }
+        );
 
         db('webgallery').insert({ filename: fname, caption: cap, dateadded: fDate2 })
         console.log('added');
