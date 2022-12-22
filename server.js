@@ -400,15 +400,13 @@ app.post('/AddGallery', async (req, res) => {
 
     console.log(fname, cap);
 
-    try {
-        // Use the mv() method to place the file in the upload directory (i.e. "uploads")
-        await file.mv('../uploads/gallery/' + file.name);
+    // Use the mv() method to place the file in the upload directory (i.e. "uploads")
+    await file.mv('../../uploads/gallery/' + file.name);
 
-        await db('webgallery').insert({ filename: fname, caption: cap, dateadded: fDate2 })
-
-        res.send(JSON.stringify('added'));
-    }
-    catch (err) { console.log(err) }
+    await db('webgallery').insert({ filename: fname, caption: cap, dateadded: fDate2 })
+        .then(() => {
+            res.send(JSON.stringify('added'));
+        }).catch((err) => { console.log(err) });
 
     // db.select('*').from('webgallery')
     //     .then(photos => {
