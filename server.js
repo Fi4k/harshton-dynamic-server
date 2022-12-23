@@ -414,11 +414,11 @@ app.post('/AddGallery', async (req, res) => {
 
     let url = req.body.filename;
     let cap = req.body.caption;
-    let fDate = Date.now()
+    // let fDate = Date.now()
 
     // console.log(fDate);
 
-    // console.log(fname, cap);
+    console.log(url, cap);
 
     try {
         // Use the mv() method to place the file in the upload directory (i.e. "uploads")
