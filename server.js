@@ -488,7 +488,7 @@ app.get('/LoadGalleryWeb', (req, res) => {
                     // '</div>' +
                     // '</div>';
                     '<div class="col-lg-6 img-block">' +
-                    '<img src="images/gallery/' + row.filename + '" alt="1" width="100%">' +
+                    '<img src="' + row.filename + '" alt="1" width="100%">' +
                     '<div class="col-lg-12 caption">' +
                     '<p><b>' + row.caption + '</b></p>' +
                     '</div>' +
