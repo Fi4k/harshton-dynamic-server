@@ -7,10 +7,11 @@ const knex = require('knex');
 const expressFileupload = require('express-fileupload');
 const fs = require('fs');
 
-const fbApp = require('firebase/app');
-const getStorage = require('firebase/storage');
-const ref = require('firebase/storage');
-const uploadBytes = require('firebase/storage');
+const firebase = require('firebase/app');
+// const getStorage = 
+require('firebase/storage');
+// const ref = require('firebase/storage');
+// const uploadBytes = require('firebase/storage');
 
 const firebaseConfig = {
     apiKey: "AIzaSyA2dkj7rZElDd37_V3BTNPP3sZ-D9TjLOU",
@@ -404,20 +405,20 @@ app.post('/AddGallery', async (req, res) => {
 
     console.log(fDate2);
 
-    console.log(req.body)
-    console.log(req.body.caption);
-    console.log(req.files.file.name);
+    // console.log(req.body)
+    // console.log(req.body.caption);
+    // console.log(req.files.file.name);
 
-    // Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
-    let file = req.files.file;
+    // // Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
+    // let file = req.files.file;
 
-    let fname = file.name;
+    let url = req.body.filename;
     let cap = req.body.caption;
     let fDate = Date.now()
 
-    console.log(fDate);
+    // console.log(fDate);
 
-    console.log(fname, cap);
+    // console.log(fname, cap);
 
     try {
         // Use the mv() method to place the file in the upload directory (i.e. "uploads")
@@ -427,16 +428,7 @@ app.post('/AddGallery', async (req, res) => {
         //     fs.mkdirSync(dir, { recursive: true });
         // }
 
-        fbApp.initializeApp(firebaseConfig);
-        const storage = fbApp.getStorage();
-        const imageRef = fbApp.ref(storage, `uploads/gallery/${file.name}`);
-        fbApp.uploadBytes(imageRef, file)
-            .then((snapshot) => {
-                console.log('added')
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+
 
         // file.mv(`./${file.name}`
         // , err => {
@@ -449,7 +441,7 @@ app.post('/AddGallery', async (req, res) => {
         // }
         // );
 
-        db('webgallery').insert({ filename: fname, caption: cap, dateadded: fDate2 }).then(() => {
+        db('webgallery').insert({ filename: url, caption: cap, dateadded: fDate2 }).then(() => {
             console.log('added')
             res.send(JSON.stringify('added'));
         }).catch((err) => { console.log(err) });
