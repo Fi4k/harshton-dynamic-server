@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyPaser = require('body-parser');
-// const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 const cors = require('cors');
 const knex = require('knex');
 // const createTcpPool = require('./createTcpPool');
@@ -23,17 +23,17 @@ const firebaseConfig = {
     measurementId: "G-6MQ0212577"
 };
 
-// const db = knex({
-//     client: 'pg',
-//     connection: {
-//         connectionString: process.env.DATABASE_URL,
-//         ssl: true,
-//         // host: '127.0.0.1',
-//         // user: 'postgres',
-//         // password: 'fi4k',
-//         // database: 'harshtonDB'
-//     }
-// });
+const db = knex({
+    client: 'pg',
+    connection: {
+        // connectionString: process.env.DATABASE_URL,
+        // ssl: true,
+        host: '127.0.0.1',
+        user: 'postgres',
+        password: 'fi4k',
+        database: 'harshtonDB'
+    }
+});
 
 const app = express();
 app.use(cors());
@@ -47,17 +47,17 @@ app.use(function (req, res, next) {
 app.use(bodyPaser.json());
 app.use(expressFileupload());
 
-const db = knex({
-    client: 'pg',
-    connection: {
-        connectionString: process.env.DATABASE_URL,
-        ssl: { rejectUnauthorized: false },
-        // host: '127.0.0.1',
-        // user: 'postgres',
-        // password: 'fi4k',
-        // database: 'harshtonDB'
-    }
-});
+// const db = knex({
+//     client: 'pg',
+//     connection: {
+//         connectionString: process.env.DATABASE_URL,
+//         ssl: { rejectUnauthorized: false },
+//         // host: '127.0.0.1',
+//         // user: 'postgres',
+//         // password: 'fi4k',
+//         // database: 'harshtonDB'
+//     }
+// });
 
 
 
@@ -311,6 +311,10 @@ const db = knex({
 // }
 
 app.get('/', (req, res) => {
+
+
+
+
     // html = '';
     // db.select('*').from('gallery')
     //     .then(photos => {
@@ -326,30 +330,50 @@ app.get('/', (req, res) => {
 
 })
 
-app.post('/Login', async (req, res) => {
-    // console.log(req.body)
-    // console.log(req.email);
-    // console.log(req.body);
+app.post('/register', async (req, res) => {
 
-    // console.log(req.files.file.name);
+    const saltRounds = 10;
+    // var vhash = null;
+    bcrypt.hash(req.body.password, saltRounds, async function (err, hash) {
+        // Store hash in your password DB.
+        console.log(hash);
 
-    // let found = false;
+        await db.transaction(async trx => {
+            await db('users')
+                .insert({ uname: req.body.name, uemail: req.body.email, upassword: 'na' })
+                .transacting(trx);
 
-    // await db.select('*').from('users').where({ email: req.body.email })
-    db('users').where('uemail', req.body.email).select()
-        .then(user => {
-            if (user.length) {
-                res.json(user[0].uname);
+            await db('login')
+                .insert({ email: req.body.email, hash: hash })
+                .transacting(trx);
+        })
+            .then((val) => {
+                console.log(val);
+                res.json('User registered successfully');
+            });
+    });
+
+
+})
+
+app.post('/login', async (req, res) => {
+    db('login').where('email', req.body.email).select()
+        .then(credential => {
+            if (credential.length) {
+                console.log(credential[0].email);
+                //Compare passwords
+                bcrypt.compare(req.body.password, credential[0].hash, function (err, result) {
+                    // result == true
+                    if (result)
+                        res.json('Login Successfull!');
+                    else
+                        res.json('Incorrect Password! Contact Admin');
+                });
             } else {
                 res.json('No such user!');
             }
-            // console.log(user[0].uname);
         })
         .catch((err) => { console.log(err) });
-
-    // if (!found) {
-
-    // }
 })
 
 // app.post('/AdddGallery', async (req, res) => {
