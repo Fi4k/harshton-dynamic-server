@@ -342,7 +342,7 @@ app.post('/register', async (req, res) => {
             await db('users')
                 .insert({ uname: req.body.name, uemail: req.body.email, upassword: 'na' })
                 .transacting(trx);
-
+cls
             await db('login')
                 .insert({ email: req.body.email, hash: hash })
                 .transacting(trx);
