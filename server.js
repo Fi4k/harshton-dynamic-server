@@ -328,7 +328,7 @@ app.post('/login', async (req, res) => {
         .catch((err) => { console.log(err) });
 })
 
-app.get('/test', (req, res) => {
+app.post('/test', (req, res) => {
 
 
 
@@ -343,7 +343,7 @@ app.get('/test', (req, res) => {
     //                 '<img src="images/' + photo.filename + '" alt="img" width="100%">' +
     //                 '</div>';
     //         });
-    res.send(`Test is working!!`);
+    res.json({ "email": req.body.email || "no email", "password": req.body.password || "no password" });
     //     });
 
 })
