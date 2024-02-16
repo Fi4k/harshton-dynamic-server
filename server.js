@@ -308,6 +308,26 @@ app.use(expressFileupload());
 //     ]
 // }
 
+app.get('/test', (req, res) => {
+
+
+
+
+    // html = '';
+    // db.select('*').from('gallery')
+    //     .then(photos => {
+    //         console.log(photos);
+    //         photos.forEach(photo => {
+    //             html = html +
+    //                 '<div class="col-lg-6">' +
+    //                 '<img src="images/' + photo.filename + '" alt="img" width="100%">' +
+    //                 '</div>';
+    //         });
+    res.send(`Test is working!!`);
+    //     });
+
+})
+
 app.get('/', (req, res) => {
 
 
