@@ -308,6 +308,26 @@ app.use(expressFileupload());
 //     ]
 // }
 
+app.post('/login', async (req, res) => {
+    db('login').where('email', req.body.email).select()
+        .then(credential => {
+            if (credential.length) {
+                console.log(credential[0].email);
+                //Compare passwords
+                bcrypt.compare(req.body.password, credential[0].hash, function (err, result) {
+                    // result == true
+                    if (result)
+                        res.json('Login Successfull!');
+                    else
+                        res.json('Incorrect Password! Contact Admin');
+                });
+            } else {
+                res.json('No such user!');
+            }
+        })
+        .catch((err) => { console.log(err) });
+})
+
 app.get('/test', (req, res) => {
 
 
@@ -374,25 +394,7 @@ app.post('/register', async (req, res) => {
 
 })
 
-app.post('/login', async (req, res) => {
-    db('login').where('email', req.body.email).select()
-        .then(credential => {
-            if (credential.length) {
-                console.log(credential[0].email);
-                //Compare passwords
-                bcrypt.compare(req.body.password, credential[0].hash, function (err, result) {
-                    // result == true
-                    if (result)
-                        res.json('Login Successfull!');
-                    else
-                        res.json('Incorrect Password! Contact Admin');
-                });
-            } else {
-                res.json('No such user!');
-            }
-        })
-        .catch((err) => { console.log(err) });
-})
+
 
 // app.post('/AdddGallery', async (req, res) => {
 //     try {
