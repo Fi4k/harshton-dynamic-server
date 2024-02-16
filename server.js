@@ -30,6 +30,7 @@ const db = knex({
         // ssl: true,
         // host: '164.90.215.151',
         user: 'postgres',
+        password: 'fi4k',
         database: 'harshtonDB'
     }
 });
