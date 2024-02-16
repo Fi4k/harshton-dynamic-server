@@ -308,6 +308,8 @@ app.use(expressFileupload());
 // }
 
 app.post('/login', async (req, res) => {
+    console.log(req.body.email)
+    console.log(db)
     db('login').where('email', req.body.email).select()
         .then(credential => {
             if (credential.length) {
