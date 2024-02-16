@@ -28,7 +28,7 @@ const db = knex({
     connection: {
         // connectionString: process.env.DATABASE_URL,
         // ssl: true,
-        host: '164.90.215.151',
+        // host: '164.90.215.151',
         user: 'postgres',
         database: 'harshtonDB'
     }
